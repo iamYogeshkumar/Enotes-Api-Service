@@ -2,6 +2,8 @@ package com.enotes.entity;
 
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +18,7 @@ public class BaseModel {
 	
 	private Integer createdBy;
 	
+	@CreationTimestamp
 	private Date createdOn;
 	
 	private Integer updatedBy;

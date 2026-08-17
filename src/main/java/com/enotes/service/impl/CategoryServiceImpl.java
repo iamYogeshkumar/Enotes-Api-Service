@@ -2,10 +2,13 @@ package com.enotes.service.impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.enotes.dto.CategoryDto;
+import com.enotes.dto.CategoryResponse;
 import com.enotes.entity.Category;
 import com.enotes.repo.CategoryRepository;
 import com.enotes.service.CategoryService;
@@ -15,18 +18,37 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
 	private CategoryRepository categoryRepo;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
-	public boolean saveCategory(Category category) {
+	public boolean saveCategory(CategoryDto categoryDto) {
+		Category category = mapper.map(categoryDto, Category.class);
+		
 		category.setIsDeleted(false);
+		category.setIsActive(true);
+		category.setCreatedBy(1);
+		category.setUpdatedBy(1);
 		Category save = categoryRepo.save(category);
-		return ObjectUtils.isEmpty(save)?true:false;
+		
+		return ObjectUtils.isEmpty(save)?false:true;
 	}
 
 	@Override
-	public List<Category> getAllCategory() {
+	public List<CategoryDto> getAllCategory() {
 		List<Category> Categories = categoryRepo.findAll();
-		return Categories;
+		List<CategoryDto> list = Categories.stream().map(c->mapper.map(c, CategoryDto.class)).toList();
+		
+		return list;
+	}
+
+	@Override
+	public List<CategoryResponse> getActiveCategory() {
+		List<Category> Categories = categoryRepo.findByIsActiveTrue();
+		List<CategoryResponse> list = Categories.stream().map(active->mapper.map(active, CategoryResponse.class)).toList();
+		
+		return list;
 	}
 
 }
