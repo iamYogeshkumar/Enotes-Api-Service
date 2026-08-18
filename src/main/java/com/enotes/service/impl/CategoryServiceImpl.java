@@ -1,5 +1,6 @@
 package com.enotes.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +28,33 @@ public class CategoryServiceImpl implements CategoryService {
 	public boolean saveCategory(CategoryDto categoryDto) {
 		Category category = mapper.map(categoryDto, Category.class);
 		
-		category.setIsDeleted(false);
-		category.setIsActive(true);
-		category.setCreatedBy(1);
-		category.setUpdatedBy(1);
+		if(ObjectUtils.isEmpty(category.getId())) {
+			category.setIsDeleted(false);
+			category.setIsActive(true);
+			category.setCreatedBy(1);
+			category.setUpdatedBy(1);
+			
+		}else {
+			UpdateCategory(category);
+		}
+		
 		Category save = categoryRepo.save(category);
 		
 		return ObjectUtils.isEmpty(save)?false:true;
+	}
+
+	private void UpdateCategory(Category category) {
+		Optional<Category> findById = categoryRepo.findById(category.getId());
+		if(findById.isPresent()) {
+			Category existCategory = findById.get();
+			category.setCreatedBy(existCategory.getCreatedBy());
+			category.setCreatedOn(existCategory.getCreatedOn());
+			category.setIsDeleted(existCategory.getIsDeleted());
+			
+			category.setUpdatedBy(existCategory.getUpdatedBy());
+			category.setUpdatedOn(new Date());
+			
+		}
 	}
 
 	@Override
