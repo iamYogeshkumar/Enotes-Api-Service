@@ -25,8 +25,5 @@ public class Category  extends BaseModel{
 	
 	private String discription;
 	
-
-	
-	
 	
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
+import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.service.CategoryService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {
@@ -59,12 +62,27 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id){
-		CategoryDto categoryDto = categoryService.getCategoryById(id);
-		if(ObjectUtils.isEmpty(categoryDto)) {
-			return new ResponseEntity<>("category not found by Id= "+id,HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws ResourceNotFoundException{
+		CategoryDto categoryDto;
+		categoryDto = categoryService.getCategoryById(id);
 		return new ResponseEntity<>(categoryDto,HttpStatus.OK);
+		
+//		try {
+//			
+//			categoryDto = categoryService.getCategoryById(id);
+//			return new ResponseEntity<>(categoryDto,HttpStatus.OK);
+//			
+//			
+//		} catch (ResourceNotFoundException e) {
+//			log.error("controller :: getCategorybyId "+e.getMessage());
+//			return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+//			
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+//			
+//		}
+		
+		
 	}
 	
 	
