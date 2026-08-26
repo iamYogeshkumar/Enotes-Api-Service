@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +22,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
 	}
 	
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<?> handleValidationExceptionException(ValidationException exception){
+		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
+		return new ResponseEntity<>(exception.getError(),HttpStatus.BAD_REQUEST);
+	}
 	
 	
-	
+	 
 }
