@@ -25,13 +25,13 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<?> handleValidationException(ValidationException exception){
-		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
+		log.error("GlobalExceptionHandler :: ValidationException "+exception.getMessage());
 		return new ResponseEntity<>(exception.getError(),HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(ExistDataException.class)
 	public ResponseEntity<?> handleExistDataException(ExistDataException exception){
-		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
+		log.error("GlobalExceptionHandler :: ExistDataException "+exception.getMessage());
 		return new ResponseEntity<>(exception.getMessage(),HttpStatus.CONFLICT);
 	}
 	
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<?> handlHttpMessageNotReadableException(HttpMessageNotReadableException exception){
-		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
+		log.error("GlobalExceptionHandler :: HttpMessageNotReadableException "+exception.getMessage());
 		return new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 }
