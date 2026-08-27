@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(ValidationException.class)
-	public ResponseEntity<?> handleValidationExceptionException(ValidationException exception){
+	public ResponseEntity<?> handleValidationException(ValidationException exception){
 		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
 		return new ResponseEntity<>(exception.getError(),HttpStatus.BAD_REQUEST);
 	}
