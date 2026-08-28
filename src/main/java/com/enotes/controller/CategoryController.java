@@ -18,6 +18,7 @@ import com.enotes.dto.CategoryDto;
 import com.enotes.dto.CategoryResponse;
 import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.service.CategoryService;
+import com.enotes.util.CommonUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,9 +34,11 @@ public class CategoryController {
 	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
 		boolean saveCategory = categoryService.saveCategory(categoryDto);
 		if (saveCategory) {
-			return new ResponseEntity<>("saved", HttpStatus.OK);
+			return CommonUtil.createBuildResponseMessage("Saved scucess", HttpStatus.OK);
+//			return new ResponseEntity<>("saved", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("not saved", HttpStatus.INTERNAL_SERVER_ERROR);
+		   return	CommonUtil.createErrorResponseMessage("not saved", HttpStatus.INTERNAL_SERVER_ERROR);
+//			return new ResponseEntity<>("not saved", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -44,9 +47,11 @@ public class CategoryController {
 	public ResponseEntity<?> getAllcategory(){
 		List<CategoryDto> allCategory = categoryService.getAllCategory();
 		if(CollectionUtils.isEmpty(allCategory)) {
-			return new ResponseEntity<>("no content",HttpStatus.OK);
+			return ResponseEntity.noContent().build();
+//			return new ResponseEntity<>("no content",HttpStatus.OK);
 		}else {
-			return new ResponseEntity<>(allCategory,HttpStatus.OK);
+			return CommonUtil.createBuildResponse(allCategory, HttpStatus.OK);
+//			return new ResponseEntity<>(allCategory,HttpStatus.OK);
 		}
 	}
 	
@@ -55,9 +60,11 @@ public class CategoryController {
 	public ResponseEntity<?> getAllActivecategory(){
 		List<CategoryResponse> allCategory = categoryService.getActiveCategory();
 		if(CollectionUtils.isEmpty(allCategory)) {
-			return new ResponseEntity<>("no content",HttpStatus.OK);
+//			return new ResponseEntity<>("no content",HttpStatus.OK);
+			return ResponseEntity.noContent().build();
 		}else {
-			return new ResponseEntity<>(allCategory,HttpStatus.OK);
+//			return new ResponseEntity<>(allCategory,HttpStatus.OK);
+			return CommonUtil.createBuildResponse(allCategory, HttpStatus.OK);
 		}
 	}
 	
@@ -65,8 +72,8 @@ public class CategoryController {
 	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws ResourceNotFoundException{
 		CategoryDto categoryDto;
 		categoryDto = categoryService.getCategoryById(id);
-		return new ResponseEntity<>(categoryDto,HttpStatus.OK);
-		
+//		return new ResponseEntity<>(categoryDto,HttpStatus.OK);
+		return CommonUtil.createBuildResponse(categoryDto, HttpStatus.OK);
 //		try {
 //			
 //			categoryDto = categoryService.getCategoryById(id);
@@ -90,9 +97,11 @@ public class CategoryController {
 	public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable Integer id){
 		boolean status = categoryService.deleteCategoryById(id);
 		if(!status) {
-			return new ResponseEntity<>("category not found by Id= "+id,HttpStatus.NOT_FOUND);
+//			return new ResponseEntity<>("category not found by Id= "+id,HttpStatus.NOT_FOUND);
+			return CommonUtil.createErrorResponseMessage("category not found by Id= "+id,HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>("deleted ",HttpStatus.OK);
+	    return	CommonUtil.createErrorResponseMessage("Deleted", HttpStatus.OK);
+//		return new ResponseEntity<>("deleted ",HttpStatus.OK);
 	}
 
 }
