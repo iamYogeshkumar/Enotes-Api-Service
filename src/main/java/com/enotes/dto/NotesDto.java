@@ -2,27 +2,20 @@ package com.enotes.dto;
 
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class CategoryDto {
+@Getter
+public class NotesDto {
 
+	
 	private Integer id;
-
-	private String name;
-
+	private String title;
 	private String discription;
-
-	private Boolean isActive;
-
-	private Boolean isDeleted;
-
+	
+	private CategoryDto category;
+	
 	private Integer createdBy;
 
 	private Date createdOn;
@@ -31,6 +24,14 @@ public class CategoryDto {
 
 	private Date updatedOn;
 	
-	
+	@Setter
+	@Getter
+	public static class CategoryDto{
+		private Integer id;
 
+		private String name;
+
+	}
+	
+	
 }
