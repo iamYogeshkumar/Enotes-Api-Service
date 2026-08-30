@@ -1,6 +1,7 @@
 package com.enotes.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDto;
@@ -146,6 +148,20 @@ public class NotesServiceImpl implements NotesService {
 		List<NotesDto> list = all.stream().map(n-> mapper.map(n, NotesDto.class)).toList();
 		
 		return list;
+	}
+
+	@Override
+	public byte[] downloadFile(FileDetails fileDetails) throws ResourceNotFoundException, IOException {
+		FileInputStream fileInputStream = new FileInputStream(fileDetails.getPath());
+		byte[] copyToByteArray = StreamUtils.copyToByteArray(fileInputStream);
+		return copyToByteArray;
+	}
+
+	@Override
+	public FileDetails getFileDetails(Integer id) throws ResourceNotFoundException {
+		FileDetails fileDetails = fileRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("file id not found "));
+
+		return fileDetails;
 	}
 
 }
