@@ -1,5 +1,7 @@
 package com.enotes.exception;
 
+import java.io.FileNotFoundException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -50,4 +52,11 @@ public class GlobalExceptionHandler {
 //		return new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(),HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(FileNotFoundException.class)
+	public ResponseEntity<?> handleFileNotFoundException(FileNotFoundException exception){
+		log.error("GlobalExceptionHandler :: FileNotFoundException "+exception.getMessage());
+		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
 }
