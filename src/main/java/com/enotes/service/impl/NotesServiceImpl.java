@@ -13,6 +13,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDto;
 import com.enotes.dto.NotesDto.CategoryDto;
+import com.enotes.dto.NotesResponse;
 import com.enotes.entity.FileDetails;
 import com.enotes.entity.Notes;
 import com.enotes.exception.ResourceNotFoundException;
@@ -162,6 +165,26 @@ public class NotesServiceImpl implements NotesService {
 		FileDetails fileDetails = fileRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("file id not found "));
 
 		return fileDetails;
+	}
+
+	@Override
+	public NotesResponse getAllNotesByUser(Integer userId,int pageNo,int pageSize) {
+		PageRequest of = PageRequest.of(pageNo, pageSize);
+//		PageRequest of = PageRequest.of(pageNo, 2);	
+		Page<Notes> page = notesRepositories.findByCreatedBy(userId,of);
+		List<NotesDto> notesDto = page.get().map(m->mapper.map(m, NotesDto.class)).toList();
+		
+		NotesResponse notesResponse = NotesResponse.builder().
+				                      notes(notesDto)
+				                      .totalElement(page.getTotalElements())
+				                      .pageNo(page.getNumber())
+				                      .pageSize(page.getSize())
+				                      .totalPages(page.getTotalPages())
+				                      .isFirst(page.isFirst())
+				                      .isLast(page.isLast())
+				                      .build();
+				                      
+		return notesResponse;
 	}
 
 }

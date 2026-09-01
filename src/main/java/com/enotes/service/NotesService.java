@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.enotes.dto.NotesDto;
+import com.enotes.dto.NotesResponse;
 import com.enotes.entity.FileDetails;
 import com.enotes.exception.ResourceNotFoundException;
 
@@ -18,4 +19,6 @@ public interface NotesService {
 	public byte[] downloadFile(FileDetails fileDetails)  throws ResourceNotFoundException,IOException;
 
 	public FileDetails getFileDetails(Integer id) throws ResourceNotFoundException;
+
+	public NotesResponse getAllNotesByUser(Integer userId,int pageNo,int pageSize);
 }
