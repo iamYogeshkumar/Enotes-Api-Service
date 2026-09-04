@@ -54,7 +54,7 @@ public class NotesServiceImpl implements NotesService {
 	
 
 	@Override
-	public boolean saveNotes(String notes,MultipartFile file) throws ResourceNotFoundException, IOException {
+	public boolean saveNotes(String notes,MultipartFile file) throws Exception {
 		// category validation
 		
 		//deserialize JSON content from given JSON content String.
@@ -64,6 +64,11 @@ public class NotesServiceImpl implements NotesService {
 		
 		// category validation
 		checkCategoryExist(notesDto.getCategory());
+		
+		if(!ObjectUtils.isEmpty(notesDto.getId())) {
+			
+			updateNotes(notesDto,file);
+		}
 		
 		Notes noteEntity = mapper.map(notesDto, Notes.class);
 		
@@ -79,6 +84,16 @@ public class NotesServiceImpl implements NotesService {
 		}
 		
 		return false;
+	}
+
+	private void updateNotes(NotesDto notesDto, MultipartFile file) throws Exception {
+		
+		Notes existNotes = notesRepositories.findById(notesDto.getId()).orElseThrow(()->new ResourceNotFoundException("invalid Notes Id = "+notesDto.getId()));
+		
+		if(ObjectUtils.isEmpty(file)) {
+			notesDto.setFileDetails(mapper.map(existNotes.getFileDetails(), NotesDto.FileDetails.class));
+		}
+		
 	}
 
 	private FileDetails saveFileDetails(MultipartFile file) throws IOException {

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.enotes.dto.NotesDto;
 import com.enotes.dto.NotesResponse;
 import com.enotes.entity.FileDetails;
-import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.service.NotesService;
 import com.enotes.util.CommonUtil;
 
@@ -34,7 +32,7 @@ public class NotesController {
 	private NotesService notesService;
 	
 	@PostMapping("/")
-	public ResponseEntity<?>  saveNotes(@RequestParam String notes ,@RequestParam(required = false) MultipartFile file)throws ResourceNotFoundException, IOException{
+	public ResponseEntity<?>  saveNotes(@RequestParam String notes ,@RequestParam(required = false) MultipartFile file)throws Exception{
 		boolean saveNotes = notesService.saveNotes(notes,file);
 		if(saveNotes) {
 			return CommonUtil.createBuildResponseMessage("Notes Saved", HttpStatus.CREATED);

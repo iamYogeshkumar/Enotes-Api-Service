@@ -12,7 +12,7 @@ import com.enotes.exception.ResourceNotFoundException;
 
 public interface NotesService {
 
-	public boolean saveNotes(String notes,MultipartFile file) throws ResourceNotFoundException,IOException;
+	public boolean saveNotes(String notes,MultipartFile file) throws ResourceNotFoundException,IOException, Exception ;
 	
 	public List<NotesDto> getAllNotes();
 
