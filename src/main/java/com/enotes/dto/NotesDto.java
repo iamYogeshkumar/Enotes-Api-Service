@@ -9,13 +9,12 @@ import lombok.Setter;
 @Getter
 public class NotesDto {
 
-	
 	private Integer id;
 	private String title;
 	private String discription;
-	
+
 	private CategoryDto category;
-	
+
 	private Integer createdBy;
 
 	private Date createdOn;
@@ -23,25 +22,28 @@ public class NotesDto {
 	private Integer updatedBy;
 
 	private Date updatedOn;
-	
+
 	private FileDetails fileDetails;
-	
+
+	private Boolean isDeleted;
+
+	private Date deletedOn;
+
 	@Setter
 	@Getter
-	public static class CategoryDto{
+	public static class CategoryDto {
 		private Integer id;
 
 		private String name;
 
 	}
-	
+
 	@Setter
 	@Getter
-	public static class FileDetails{
+	public static class FileDetails {
 		private Integer id;
 		private String originalFileName;
 		private String displayFileName;
 	}
-	
-	
+
 }
