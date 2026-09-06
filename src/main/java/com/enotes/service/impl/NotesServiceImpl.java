@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,6 +61,8 @@ public class NotesServiceImpl implements NotesService {
 		//deserialize JSON content from given JSON content String.
 		ObjectMapper objMapper = new ObjectMapper();
 		NotesDto notesDto = objMapper.readValue(notes, NotesDto.class);
+		notesDto.setIsDeleted(false);
+		notesDto.setDeletedOn(null);
 		
 		
 		// category validation
@@ -100,9 +103,9 @@ public class NotesServiceImpl implements NotesService {
 		
 		if(!ObjectUtils.isEmpty(file) && !file.isEmpty()) {
 			
-			List<String> extensionAllow = Arrays.asList("pdf","xlsx","jpg","jpeg");
+			List<String> extensionAllow = Arrays.asList("pdf","xlsx","jpg","jpeg","png");
 			
-			if(extensionAllow.contains(FilenameUtils.getExtension(file.getOriginalFilename()))) {
+			if(!extensionAllow.contains(FilenameUtils.getExtension(file.getOriginalFilename()))) {
 				throw new IllegalArgumentException("invalid file format ! supported type pdf,jpeg,ipe,xlsx");
 			}
 			
@@ -186,7 +189,7 @@ public class NotesServiceImpl implements NotesService {
 	public NotesResponse getAllNotesByUser(Integer userId,int pageNo,int pageSize) {
 		PageRequest of = PageRequest.of(pageNo, pageSize);
 //		PageRequest of = PageRequest.of(pageNo, 2);	
-		Page<Notes> page = notesRepositories.findByCreatedBy(userId,of);
+		Page<Notes> page = notesRepositories.findByCreatedByAndIsDeletedFalse(userId,of);
 		List<NotesDto> notesDto = page.get().map(m->mapper.map(m, NotesDto.class)).toList();
 		
 		NotesResponse notesResponse = NotesResponse.builder().
@@ -200,6 +203,41 @@ public class NotesServiceImpl implements NotesService {
 				                      .build();
 				                      
 		return notesResponse;
+	}
+
+	@Override
+	public boolean softDeleteNotes(Integer id) throws Exception {
+		Notes notes = notesRepositories.findById(id).orElseThrow(()->new ResourceNotFoundException("Notes Id not found"));
+		notes.setIsDeleted(true);
+		notes.setDeletedOn(new Date());
+		Notes save = notesRepositories.save(notes);
+		if(ObjectUtils.isEmpty(save)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean restoreNotes(Integer id) throws Exception {
+		Notes notes = notesRepositories.findById(id).orElseThrow(()->new ResourceNotFoundException("Notes Id not found"));
+		notes.setIsDeleted(false);
+		notes.setDeletedOn(null);
+		
+		 Notes save = notesRepositories.save(notes);
+		 if(!ObjectUtils.isEmpty(save)) {
+			 return true;
+		 }
+		 else {
+			 return false;
+		 }
+		
+	}
+
+	@Override
+	public List<NotesDto> getUserRecycleBinNote(Integer id) {
+		List<Notes> notes=notesRepositories.findByCreatedByAndIsDeletedTrue(id);
+		List<NotesDto> list = notes.stream().map(note->mapper.map(note,NotesDto.class)).toList();
+		return list;
 	}
 
 }

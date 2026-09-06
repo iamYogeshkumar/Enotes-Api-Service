@@ -21,4 +21,10 @@ public interface NotesService {
 	public FileDetails getFileDetails(Integer id) throws ResourceNotFoundException;
 
 	public NotesResponse getAllNotesByUser(Integer userId,int pageNo,int pageSize);
+
+	public boolean softDeleteNotes(Integer id ) throws Exception;
+
+	public boolean restoreNotes(Integer id)  throws Exception;
+
+	public List<NotesDto> getUserRecycleBinNote(Integer id);
 }

@@ -69,7 +69,7 @@ public class NotesController {
 	@GetMapping("/user-notes")
 	public ResponseEntity<?>  getAllNotesByUser(
 			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
-			@RequestParam(name = "pageSize", defaultValue = "4") int pageSize
+			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize
 			
 			){
 		
@@ -83,5 +83,45 @@ public class NotesController {
 		}
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/delete/{id}")
+	public ResponseEntity<?> deleteNotes(@PathVariable Integer id) throws Exception{
+		boolean softDeleteNotes = notesService.softDeleteNotes(id);
+		
+		if(softDeleteNotes) {
+			return CommonUtil.createBuildResponseMessage("delete success", HttpStatus.OK);
+		}
+		
+		return CommonUtil.createBuildResponseMessage("Not deleted", HttpStatus.NOT_FOUND);
+		
+		
+	}
+	
+	@GetMapping("/restore/{id}")
+	public ResponseEntity<?> restoreNotes(@PathVariable Integer id) throws Exception{
+		boolean restoreNotes = notesService.restoreNotes(id);
+		
+		if(restoreNotes) {
+			return CommonUtil.createBuildResponseMessage("notes restore successfully", HttpStatus.OK);
+		}
+		
+		return CommonUtil.createBuildResponseMessage("notes not found ", HttpStatus.NOT_FOUND);
+	}
+	
+	
+	@GetMapping("/recycle-bin")
+	public ResponseEntity<?> getUserRecycleBinNotes() throws Exception{
+		int userId=1;
+		List<NotesDto> notes = notesService.getUserRecycleBinNote(userId);
+		
+		if(CollectionUtils.isEmpty(notes)) {
+			return CommonUtil.createBuildResponseMessage("notes not available", HttpStatus.NOT_FOUND);
+		}
+		
+		return CommonUtil.createBuildResponse(notes, HttpStatus.OK);
+	}
+	
+	
+	
 
 }
