@@ -27,4 +27,8 @@ public interface NotesService {
 	public boolean restoreNotes(Integer id)  throws Exception;
 
 	public List<NotesDto> getUserRecycleBinNote(Integer id);
+
+	public boolean hardDeleteNotes(Integer id)  throws Exception;
+
+	public boolean emptyRecycleBin(int userId)  throws Exception;
 }

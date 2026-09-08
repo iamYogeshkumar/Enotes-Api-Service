@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -209,7 +212,7 @@ public class NotesServiceImpl implements NotesService {
 	public boolean softDeleteNotes(Integer id) throws Exception {
 		Notes notes = notesRepositories.findById(id).orElseThrow(()->new ResourceNotFoundException("Notes Id not found"));
 		notes.setIsDeleted(true);
-		notes.setDeletedOn(new Date());
+		notes.setDeletedOn(LocalDateTime.now());
 		Notes save = notesRepositories.save(notes);
 		if(ObjectUtils.isEmpty(save)) {
 			return false;
@@ -238,6 +241,26 @@ public class NotesServiceImpl implements NotesService {
 		List<Notes> notes=notesRepositories.findByCreatedByAndIsDeletedTrue(id);
 		List<NotesDto> list = notes.stream().map(note->mapper.map(note,NotesDto.class)).toList();
 		return list;
+	}
+
+	@Override
+	public boolean hardDeleteNotes(Integer id) throws Exception {
+		Notes notes = notesRepositories.findById(id).orElseThrow( ()-> new ResourceNotFoundException("resource not found"));
+		if(notes.getIsDeleted()) {
+			notesRepositories.delete(notes);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean emptyRecycleBin(int userId) throws Exception {
+		List<Notes> notes=notesRepositories.findByCreatedByAndIsDeletedTrue(userId);
+		if(!CollectionUtils.isEmpty(notes)) {
+			notesRepositories.deleteAll(notes);
+			return true;
+		}
+		return false;
 	}
 
 }

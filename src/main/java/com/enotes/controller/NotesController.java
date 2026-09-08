@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -121,6 +122,33 @@ public class NotesController {
 		return CommonUtil.createBuildResponse(notes, HttpStatus.OK);
 	}
 	
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> hardDeleteNotes(@PathVariable Integer id) throws Exception{
+		boolean softDeleteNotes = notesService.hardDeleteNotes(id);
+		
+		if(softDeleteNotes) {
+			return CommonUtil.createBuildResponseMessage("delete success", HttpStatus.OK);
+		}
+		
+		return CommonUtil.createBuildResponseMessage("Not deleted", HttpStatus.NOT_FOUND);
+		
+		
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> emptyRecycleBin() throws Exception{
+		int userId=1;
+		boolean softDeleteNotes = notesService.emptyRecycleBin(userId);
+		
+		if(softDeleteNotes) {
+			return CommonUtil.createBuildResponseMessage("notes delete from recycle", HttpStatus.OK);
+		}
+		
+		return CommonUtil.createBuildResponseMessage("Not deleted", HttpStatus.NOT_FOUND);
+		
+		
+	}
 	
 	
 
