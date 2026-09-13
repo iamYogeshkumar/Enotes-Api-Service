@@ -22,11 +22,15 @@ public class GlobalExceptionHandler {
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException exception){
+		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> handleResourceNotFoundException(Exception exception){
 		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
-//		return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
-		
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(),HttpStatus.NOT_FOUND);
 	}
 	
