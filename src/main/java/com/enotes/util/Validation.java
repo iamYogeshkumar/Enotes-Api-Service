@@ -17,15 +17,20 @@ import com.enotes.dto.TodoDto.StatusDto;
 import com.enotes.dto.UserDto;
 import com.enotes.entity.Role;
 import com.enotes.enums.TodoStatus;
+import com.enotes.exception.ExistDataException;
 import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.exception.ValidationException;
 import com.enotes.repo.RoleRepository;
+import com.enotes.repo.UserRepository;
 
 @Component
 public class Validation {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public void categoryValidation(CategoryDto categoryDto) {
 
@@ -106,6 +111,11 @@ public class Validation {
 
 		if (!StringUtils.hasText(userDto.getEmail()) || !userDto.getEmail().matches(Constant.EMAIL_REGEX)) {
 			throw new IllegalArgumentException("first name is invalid");
+		}else {
+			boolean status=userRepository.existsByEmail(userDto.getEmail());
+			if(status) {
+				throw new ExistDataException("this email is already exist");
+			}
 		}
 		
 		
@@ -126,6 +136,8 @@ public class Validation {
 			}
 
 		}
+		
+		
 
 	}
 }
