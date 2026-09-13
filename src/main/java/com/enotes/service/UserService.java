@@ -4,7 +4,7 @@ import com.enotes.dto.UserDto;
 
 public interface UserService {
 
-	boolean register(UserDto dto);
+	boolean register(UserDto dto) throws Exception;
 	
 	
 }
