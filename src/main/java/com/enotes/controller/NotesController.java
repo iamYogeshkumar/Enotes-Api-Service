@@ -59,7 +59,7 @@ public class NotesController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<?>  getAllNotes(NotesDto notesDto){
+	public ResponseEntity<?>  getAllNotes(){
 		 List<NotesDto> notes = notesService.getAllNotes();
 		if(!CollectionUtils.isEmpty(notes)) {
 			return CommonUtil.createBuildResponse(notes, HttpStatus.OK);

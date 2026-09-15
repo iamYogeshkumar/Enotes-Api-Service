@@ -8,7 +8,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,6 +39,11 @@ public class User {
 	
 	private String password;
 	
+	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private List<Role> role;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "status_id",referencedColumnName = "id")
+	private AccountStatus accountStatus;
 }

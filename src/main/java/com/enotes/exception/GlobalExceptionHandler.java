@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,6 +28,12 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException exception){
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(SuccessException.class)
+	public ResponseEntity<?> handleSuccessException(SuccessException exception){
+		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> handleResourceNotFoundException(Exception exception){
@@ -61,6 +68,12 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<?> handleFileNotFoundException(FileNotFoundException exception){
 		log.error("GlobalExceptionHandler :: FileNotFoundException "+exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException exception){
+		log.error("GlobalExceptionHandler :: FileNotFoundException "+exception.getMessage());
+		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 }
