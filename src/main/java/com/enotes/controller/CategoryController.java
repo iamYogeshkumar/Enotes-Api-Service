@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class CategoryController {
 	private CategoryService categoryService;
 
 	@PostMapping("/save-category")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
 		boolean saveCategory = categoryService.saveCategory(categoryDto);
 		if (saveCategory) {
@@ -44,6 +46,7 @@ public class CategoryController {
 	}
 
 	@GetMapping("/")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getAllcategory(){
 		List<CategoryDto> allCategory = categoryService.getAllCategory();
 		if(CollectionUtils.isEmpty(allCategory)) {
@@ -57,6 +60,7 @@ public class CategoryController {
 	
 	
 	@GetMapping("/active")
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
 	public ResponseEntity<?> getAllActivecategory(){
 		List<CategoryResponse> allCategory = categoryService.getActiveCategory();
 		if(CollectionUtils.isEmpty(allCategory)) {
@@ -69,6 +73,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws ResourceNotFoundException{
 		CategoryDto categoryDto;
 		categoryDto = categoryService.getCategoryById(id);
@@ -94,6 +99,7 @@ public class CategoryController {
 	
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable Integer id){
 		boolean status = categoryService.deleteCategoryById(id);
 		if(!status) {

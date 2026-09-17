@@ -1,6 +1,7 @@
 package com.enotes.exception;
 
 import java.io.FileNotFoundException;
+import java.nio.file.AccessDeniedException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException exception){
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<?> handleIllegalArgumentException(AccessDeniedException exception){
+		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.FORBIDDEN);
 	}
 	
 	@ExceptionHandler(SuccessException.class)
