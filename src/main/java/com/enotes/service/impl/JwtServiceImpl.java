@@ -10,11 +10,13 @@ import java.util.Map;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.enotes.entity.User;
 import com.enotes.service.JwtService;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -23,9 +25,6 @@ import io.jsonwebtoken.security.Keys;
 public class JwtServiceImpl implements JwtService{
 
 	private String secretKey="";
-	
-	
-	
 	
 	public JwtServiceImpl() {
 		try {
@@ -61,6 +60,50 @@ public class JwtServiceImpl implements JwtService{
 	private Key getKey() {
 	    byte[] keyByte = Decoders.BASE64.decode(secretKey);
 		return Keys.hmacShaKeyFor(keyByte);
+	}
+
+	@Override
+	public String extractUsername(String token) {
+		Claims claim=extractAllClaim(token);
+		String username = claim.getSubject();
+		return username;
+	}
+
+	private Claims extractAllClaim(String token) {
+		Claims claims = Jwts.parser().verifyWith(decryptKey(secretKey)).build().parseSignedClaims(token).getPayload();
+		return claims;
+	}
+	
+	
+	public String role(String token) {
+		Claims claims = extractAllClaim(token);
+		Object object = claims.get("role");
+		return (String)object
+;	}
+
+	private SecretKey decryptKey(String secretKey) {
+		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+
+	@Override
+	public Boolean validateToken(String token, UserDetails userDetails) {
+		String username = extractUsername(token);
+		boolean isExpire=isTokenExpired(token);
+		if(username.equalsIgnoreCase(userDetails.getUsername()) && !isExpire) {
+			return true;
+		}
+			
+		return false;
+	}
+
+	private boolean isTokenExpired(String token) {
+		Claims claims = extractAllClaim(token);
+		Date expiration = claims.getExpiration();
+		
+		// today date=16  expire=17th
+		return expiration.before(new Date()); //17 before 16 no
 	}
 	
 	
