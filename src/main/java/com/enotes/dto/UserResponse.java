@@ -8,12 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class UserResponse {
 
 	private Integer id;
 
@@ -25,10 +26,21 @@ public class UserDto {
 
 	private String mobNo;
 	
-	private String password;
+	private StatusDto accountStatus;
+	
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+	public static class StatusDto{
+		private Integer id;
+
+		private boolean isActive;
+	}
 
 	private List<RoleDto> role;
-
+	
 	@Getter
 	@Setter
 	@NoArgsConstructor
@@ -40,4 +52,5 @@ public class UserDto {
 		private String name;
 
 	}
+	
 }

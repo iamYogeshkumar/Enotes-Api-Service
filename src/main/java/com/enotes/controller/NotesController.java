@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.enotes.config.security.CustomUserDetails;
 import com.enotes.dto.FavouriteNoteDto;
 import com.enotes.dto.NotesDto;
 import com.enotes.dto.NotesResponse;
@@ -76,12 +78,13 @@ public class NotesController {
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?>  getAllNotesByUser(
 			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
-			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize
-			
+			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+			 @AuthenticationPrincipal CustomUserDetails userDetails
 			){
 		
 //		Sort sort=direction.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
-		Integer userId=1;
+//		Integer userId=1;
+		Integer userId = userDetails.getUser().getId();
 		NotesResponse notesResponse= notesService.getAllNotesByUser(userId,pageNo,pageSize);
 		
 //		List<NotesDto> notes = notesService.getAllNotes();
@@ -120,8 +123,9 @@ public class NotesController {
 	
 	@GetMapping("/recycle-bin")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> getUserRecycleBinNotes() throws Exception{
-		int userId=1;
+	public ResponseEntity<?> getUserRecycleBinNotes( @AuthenticationPrincipal CustomUserDetails userDetails) throws Exception{
+		Integer userId = userDetails.getUser().getId();
+//		int userId=1;
 		List<NotesDto> notes = notesService.getUserRecycleBinNote(userId);
 		
 		if(CollectionUtils.isEmpty(notes)) {
@@ -148,8 +152,9 @@ public class NotesController {
 	
 	@DeleteMapping("/delete")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> emptyRecycleBin() throws Exception{
-		int userId=1;
+	public ResponseEntity<?> emptyRecycleBin(@AuthenticationPrincipal CustomUserDetails details) throws Exception{
+//		int userId=1;
+		Integer userId = details.getUser().getId();
 		boolean softDeleteNotes = notesService.emptyRecycleBin(userId);
 		
 		if(softDeleteNotes) {
@@ -163,8 +168,9 @@ public class NotesController {
 	
 	@GetMapping("/fav/{notesId}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> favouriteNote(@PathVariable int notesId) throws Exception{
-		int userId=1;
+	public ResponseEntity<?> favouriteNote(@PathVariable int notesId,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception{
+//		int userId=1;
+		Integer userId = customUserDetails.getUser().getId();
 		 notesService.favouriteNotes(userId);
 		return CommonUtil.createBuildResponseMessage("marked as favourite", HttpStatus.CREATED);
 	}
@@ -172,7 +178,7 @@ public class NotesController {
 	@DeleteMapping("/un-fav/{notesId}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> unfavouriteNote(@PathVariable int notesId) throws Exception{
-		int userId=1;
+//		int userId=1;
          notesService.unfavouriteNotes(notesId);
 		
 		return CommonUtil.createBuildResponseMessage("marked as unfavourite", HttpStatus.OK);
@@ -183,7 +189,7 @@ public class NotesController {
 	@GetMapping("/fav-note")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> getAllfavouriteNote() throws Exception{
-		int userId=1;
+//		int userId=1;
 		List<FavouriteNoteDto> favoriteNotes = notesService.getFavoriteNotes();
 		if(CollectionUtils.isEmpty(favoriteNotes)) {
 			return ResponseEntity.noContent().build();

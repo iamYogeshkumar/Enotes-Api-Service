@@ -31,12 +31,14 @@ import com.enotes.dto.NotesResponse;
 import com.enotes.entity.FavouriteNote;
 import com.enotes.entity.FileDetails;
 import com.enotes.entity.Notes;
+import com.enotes.entity.User;
 import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.repo.CategoryRepository;
 import com.enotes.repo.FavouriteRepository;
 import com.enotes.repo.FileRepository;
 import com.enotes.repo.NotesRepositories;
 import com.enotes.service.NotesService;
+import com.enotes.util.CommonUtil;
 
 import tools.jackson.databind.ObjectMapper;
 
@@ -290,7 +292,9 @@ public class NotesServiceImpl implements NotesService {
 
 	@Override
 	public List<FavouriteNoteDto> getFavoriteNotes() {
-		int userId=1;
+		User user = CommonUtil.getLoggedInUser();
+		Integer userId = user.getId();
+//		int userId=1;
 		List<FavouriteNote> listOfFavouriteNotes=favouriteRepository.findByUserId(userId);
 		return listOfFavouriteNotes.stream().map(fn->mapper.map(fn, FavouriteNoteDto.class)).toList();
 	}
