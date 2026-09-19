@@ -17,6 +17,7 @@ import com.enotes.dto.EmailRequest;
 import com.enotes.dto.LoginRequest;
 import com.enotes.dto.LoginResponse;
 import com.enotes.dto.UserRequest;
+import com.enotes.dto.UserResponse;
 import com.enotes.entity.AccountStatus;
 import com.enotes.entity.Role;
 import com.enotes.entity.User;
@@ -118,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
-		String token = "jskjkndfmdsjjsdhfhhvjbvhvdjfvvjfvkjdjvkjffjd";
+//		String token = "jskjkndfmdsjjsdhfhhvjbvhvdjfvvjfvkjdjvkjffjd";
 		
 		Authentication authenticate = manager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 	
@@ -129,7 +130,7 @@ public class AuthServiceImpl implements AuthService {
 			
 			String jwtToken = jwtService.generateJwtToken(user);
 			
-			LoginResponse loginResponse = LoginResponse.builder().token(jwtToken).userDto(mapper.map(user, UserRequest.class)).build();
+			LoginResponse loginResponse = LoginResponse.builder().token(jwtToken).userDto(mapper.map(user, UserResponse.class)).build();
 			
 			return loginResponse;
 			
