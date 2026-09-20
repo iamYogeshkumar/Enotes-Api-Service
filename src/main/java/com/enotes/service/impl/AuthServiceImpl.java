@@ -81,12 +81,12 @@ public class AuthServiceImpl implements AuthService {
 		}
 		
 		
-		emailSend(saveUser,url);
+		emailSendForRegistration(saveUser,url);
 		// registration success
 		return true;
 	}
 	
-	private void emailSend(User saveUser,String url) throws Exception {
+	private void emailSendForRegistration(User saveUser,String url) throws Exception {
 		String message = "Hi  [[username]]"  + ",<br><br>"
 		        + "Your account has been registered successfully.<br><br>"
 		        + "<h5>Click the link below to verify your account:</h5>"
