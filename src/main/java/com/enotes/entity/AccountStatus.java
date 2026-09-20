@@ -25,4 +25,6 @@ public class AccountStatus {
 	private boolean isActive;
 
 	private String verificationCode;
+	
+	private String passwordResetToken;
 }
