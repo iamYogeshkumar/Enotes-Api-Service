@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -319,6 +320,28 @@ public class NotesServiceImpl implements NotesService {
 			return false;
 		}
 		return true;
+		
+	}
+
+	@Override
+	public NotesResponse getNotesByUserSearch(int pageNo, int pageSize,String searchKeyword) {
+		Integer userId = CommonUtil.getLoggedInUser().getId();
+		Pageable of = PageRequest.of(pageNo, pageSize);
+		Page<Notes> searchNotes = notesRepositories.searchNotes(searchKeyword, userId, of);
+		
+        List<NotesDto> notesDto = searchNotes.get().map(m->mapper.map(m, NotesDto.class)).toList();
+		
+		NotesResponse notesResponse = NotesResponse.builder().
+				                      notes(notesDto)
+				                      .totalElement(searchNotes.getTotalElements())
+				                      .pageNo(searchNotes.getNumber())
+				                      .pageSize(searchNotes.getSize())
+				                      .totalPages(searchNotes.getTotalPages())
+				                      .isFirst(searchNotes.isFirst())
+				                      .isLast(searchNotes.isLast())
+				                      .build();
+				                      
+		return notesResponse;
 		
 	}
 

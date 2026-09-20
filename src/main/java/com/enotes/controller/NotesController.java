@@ -94,6 +94,31 @@ public class NotesController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
+	@GetMapping("/search")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?>  searchNotes(
+			@RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
+			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
+			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+			 @AuthenticationPrincipal CustomUserDetails userDetails
+			){
+		
+//		Sort sort=direction.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
+//		Integer userId=1;
+		Integer userId = userDetails.getUser().getId();
+		NotesResponse notesResponse= notesService.getNotesByUserSearch(pageNo,pageSize,searchKeyword);
+		
+//		List<NotesDto> notes = notesService.getAllNotes();
+		if(!ObjectUtils.isEmpty(notesResponse)) {
+			return CommonUtil.createBuildResponse(notesResponse, HttpStatus.OK);
+		}
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	
+	
 	@GetMapping("/delete/{id}")
 	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> deleteNotes(@PathVariable Integer id) throws Exception{

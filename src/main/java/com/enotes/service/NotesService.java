@@ -23,6 +23,8 @@ public interface NotesService {
 	public FileDetails getFileDetails(Integer id) throws ResourceNotFoundException;
 
 	public NotesResponse getAllNotesByUser(Integer userId,int pageNo,int pageSize);
+	
+	public NotesResponse getNotesByUserSearch(int pageNo,int pageSize, String searchKeyword);
 
 	public boolean softDeleteNotes(Integer id ) throws Exception;
 
@@ -41,6 +43,7 @@ public interface NotesService {
 	public List<FavouriteNoteDto> getFavoriteNotes();
 
 	public Boolean copyNotes(int notesId) throws Exception ;
+	
 	
 	
 }
