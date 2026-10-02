@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enotes.config.security.CustomUserDetails;
 import com.enotes.dto.PasswordChangeReq;
 import com.enotes.dto.UserResponse;
+import com.enotes.endpoint.UserEndpoint;
 import com.enotes.entity.User;
 import com.enotes.service.UserService;
 import com.enotes.util.CommonUtil;
 
 @RestController
-@RequestMapping("/api/v1/user")
-public class UserController {
+public class UserController implements UserEndpoint {
 
 	@Autowired
 	private ModelMapper mapper;
@@ -28,7 +28,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/profile")
+	
+	@Override
 	public ResponseEntity<?> getProfile( @AuthenticationPrincipal CustomUserDetails userDetails){
 		System.err.println(userDetails.getUsername());
 		System.err.println(userDetails.getUser().getFirstName());
@@ -37,7 +38,7 @@ public class UserController {
 		return CommonUtil.createBuildResponse(response, HttpStatus.OK);
 	}
 	
-	@PostMapping("/chng-pwd")
+	@Override
 	public ResponseEntity<?> changePassword(@RequestBody PasswordChangeReq changeReq){
 		userService.changePassword(changeReq);
 		return CommonUtil.createBuildResponseMessage("password changed successfully", HttpStatus.OK);
