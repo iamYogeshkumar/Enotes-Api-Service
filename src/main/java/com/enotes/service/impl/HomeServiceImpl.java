@@ -8,7 +8,11 @@ import com.enotes.exception.ResourceNotFoundException;
 import com.enotes.exception.SuccessException;
 import com.enotes.repo.UserRepository;
 import com.enotes.service.HomeService;
+import com.enotes.util.CommonUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class HomeServiceImpl implements HomeService {
 	
@@ -17,10 +21,11 @@ public class HomeServiceImpl implements HomeService {
 
 	@Override
 	public boolean verifyAccount(int userId, String verificationCode) throws Exception {
-		
+		log.info("HomeServiceImpl : verifyAccount() : Start");
 		User user = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("user not found"));
 		
 		if(user.getAccountStatus().getVerificationCode()==null) {
+			log.info("Message :Account is already verified");
 			throw new SuccessException("Account is already verified");
 		}
 		
@@ -28,10 +33,10 @@ public class HomeServiceImpl implements HomeService {
 			user.getAccountStatus().setActive(true);
 			user.getAccountStatus().setVerificationCode(null);
 			userRepository.save(user);
-			
+			log.info("Message :Account  verified successfully");
 			return true;
 		}
-		
+		log.info("HomeServiceImpl : verifyAccount() :End ");
 		return false;
 	}
 

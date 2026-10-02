@@ -16,7 +16,9 @@ import com.enotes.service.AuthService;
 import com.enotes.util.CommonUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -26,13 +28,17 @@ public class AuthController {
 	
 	@PostMapping("/")
 	public ResponseEntity<?> registerUser(@RequestBody UserRequest  userDto,HttpServletRequest servletRequest) throws Exception{
+		log.info("AuthController : registerUser() : Start");
 		String url=CommonUtil.getUrl(servletRequest);
 		boolean register = authService.register(userDto,url);
-		if(register) {
-			return CommonUtil.createBuildResponseMessage("registration successful", HttpStatus.CREATED);
+		if(!register) {
+			log.error("ERROR : {}","Registration Failed");
+			return CommonUtil.createErrorResponseMessage("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
 		else {
-			return CommonUtil.createErrorResponseMessage("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
+			log.info("AuthController : registerUser() : end");
+			return CommonUtil.createBuildResponseMessage("registration successful", HttpStatus.CREATED);
 		}
 	}
 	

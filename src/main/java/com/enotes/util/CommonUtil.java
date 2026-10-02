@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.enotes.config.security.CustomUserDetails;
-import com.enotes.dto.UserResponse;
 import com.enotes.entity.User;
 import com.enotes.handler.GenericResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 
 public class CommonUtil {
 

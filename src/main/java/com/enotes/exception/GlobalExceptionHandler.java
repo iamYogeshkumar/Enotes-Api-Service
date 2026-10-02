@@ -21,42 +21,46 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<?> handleException(Exception exception){
 //		return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		log.error("GlobalExceptionHandler : handleException : {} ",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException exception){
+		log.error("GlobalExceptionHandler : handleIllegalArgumentException :  {}",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)
-	public ResponseEntity<?> handleIllegalArgumentException(AccessDeniedException exception){
+	public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException exception){
+		log.error("GlobalExceptionHandler : handleAccessDeniedException : {} ",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.FORBIDDEN);
 	}
 	
 	@ExceptionHandler(SuccessException.class)
 	public ResponseEntity<?> handleSuccessException(SuccessException exception){
+		log.error("GlobalExceptionHandler : handleSuccessException : {}",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<?> handleResourceNotFoundException(Exception exception){
-		log.error("GlobalExceptionHandler :: handleResourceNotFoundException "+exception.getMessage());
+		log.error("GlobalExceptionHandler : handleResourceNotFoundException : {}",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(),HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<?> handleValidationException(ValidationException exception){
-		log.error("GlobalExceptionHandler :: ValidationException "+exception.getMessage());
+		log.error("GlobalExceptionHandler : ValidationException : {}",exception.getMessage());
 //		return new ResponseEntity<>(exception.getError(),HttpStatus.BAD_REQUEST);
 		return CommonUtil.createErrorResponse(exception.getError(), HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(ExistDataException.class)
 	public ResponseEntity<?> handleExistDataException(ExistDataException exception){
-		log.error("GlobalExceptionHandler :: ExistDataException "+exception.getMessage());
+		log.error("GlobalExceptionHandler : ExistDataException : {}",exception.getMessage());
 //		return new ResponseEntity<>(exception.getMessage(),HttpStatus.CONFLICT);
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.CONFLICT);
 	}
@@ -65,20 +69,20 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<?> handlHttpMessageNotReadableException(HttpMessageNotReadableException exception){
-		log.error("GlobalExceptionHandler :: HttpMessageNotReadableException "+exception.getMessage());
+		log.error("GlobalExceptionHandler : HttpMessageNotReadableException : {}",exception.getMessage());
 //		return new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(FileNotFoundException.class)
 	public ResponseEntity<?> handleFileNotFoundException(FileNotFoundException exception){
-		log.error("GlobalExceptionHandler :: FileNotFoundException "+exception.getMessage());
+		log.error("GlobalExceptionHandler : FileNotFoundException : {}",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException exception){
-		log.error("GlobalExceptionHandler :: FileNotFoundException "+exception.getMessage());
+		log.error("GlobalExceptionHandler : FileNotFoundException : {} ",exception.getMessage());
 		return CommonUtil.createErrorResponseMessage(exception.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
