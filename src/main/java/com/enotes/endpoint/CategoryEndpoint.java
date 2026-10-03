@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import static com.enotes.util.Constant.ROLE_ADMIN;
+import static com.enotes.util.Constant.ROLE_ADMIN_USER;
 import com.enotes.dto.CategoryDto;
 import com.enotes.exception.ResourceNotFoundException;
 
@@ -16,24 +17,24 @@ import com.enotes.exception.ResourceNotFoundException;
 public interface CategoryEndpoint {
 	
 	@PostMapping("/save-category")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize(ROLE_ADMIN)
 	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto);
 	
 	
 	@GetMapping("/")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize(ROLE_ADMIN)
 	public ResponseEntity<?> getAllcategory();
 	
 	@GetMapping("/active")
-	@PreAuthorize("hasAnyRole('USER','ADMIN')")
+	@PreAuthorize(ROLE_ADMIN_USER)
 	public ResponseEntity<?> getAllActivecategory();
 	
 	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize(ROLE_ADMIN)
 	public ResponseEntity<?> getCategoryDetailsById(@PathVariable Integer id) throws ResourceNotFoundException;
 	
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize(ROLE_ADMIN)
 	public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable Integer id);
 	
 	

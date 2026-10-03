@@ -13,78 +13,83 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.enotes.util.Constant.ROLE_USER;
+import static com.enotes.util.Constant.ROLE_ADMIN;
+import static com.enotes.util.Constant.DEFAULT_PAGENO;
+import static com.enotes.util.Constant.DEFAULT_PAGE_SIZE;
+import static com.enotes.util.Constant.ROLE_ADMIN_USER;
 import com.enotes.config.security.CustomUserDetails;
 
 @RequestMapping("/api/v1/notes")
 public interface NotesEndpoint {
 	
 	@PostMapping("/")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?>  saveNotes(@RequestParam String notes ,@RequestParam(required = false) MultipartFile file)throws Exception;
 	
 	@GetMapping("/download/{id}")
-	@PreAuthorize("hasAnyRole('ADMIN,USER')")
+	@PreAuthorize(ROLE_ADMIN_USER)
 	public ResponseEntity<?> downloadFile(@PathVariable Integer id) throws Exception, IOException;
 	
 	@GetMapping("/")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize(ROLE_ADMIN)
 	public ResponseEntity<?>  getAllNotes();
 	
 	@GetMapping("/user-notes")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?>  getAllNotesByUser(
-			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
-			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+			@RequestParam(name = "pageNo", defaultValue =DEFAULT_PAGENO) int pageNo ,
+			@RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
 			 @AuthenticationPrincipal CustomUserDetails userDetails
 			);
 	
 	
 	@GetMapping("/search")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?>  searchNotes(
 			@RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
-			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
-			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+			@RequestParam(name = "pageNo", defaultValue =DEFAULT_PAGENO) int pageNo ,
+			@RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
 			 @AuthenticationPrincipal CustomUserDetails userDetails
 			);
 	
 	@GetMapping("/delete/{id}")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> deleteNotes(@PathVariable Integer id) throws Exception;
 	
 	
 	@GetMapping("/restore/{id}")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> restoreNotes(@PathVariable Integer id) throws Exception;
 	
 	
 	@GetMapping("/recycle-bin")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> getUserRecycleBinNotes( @AuthenticationPrincipal CustomUserDetails userDetails) throws Exception;
 	
 	@DeleteMapping("/delete/{id}")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> hardDeleteNotes(@PathVariable Integer id) throws Exception;
 	
 	@DeleteMapping("/delete")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> emptyRecycleBin(@AuthenticationPrincipal CustomUserDetails details) throws Exception;
 	
 	
 	@GetMapping("/fav/{notesId}")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> favouriteNote(@PathVariable int notesId,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception;
 	
 	@DeleteMapping("/un-fav/{notesId}")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> unfavouriteNote(@PathVariable int notesId) throws Exception;
 	
 	@GetMapping("/fav-note")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> getAllfavouriteNote() throws Exception;
 	
 	@GetMapping("/copy/{notesId}")
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize(ROLE_USER)
 	public ResponseEntity<?> copyNotes(@PathVariable int notesId) throws Exception;
 	
 
