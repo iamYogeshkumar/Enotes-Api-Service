@@ -4,11 +4,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.config.security.CustomUserDetails;
@@ -30,7 +25,7 @@ public class UserController implements UserEndpoint {
 	
 	
 	@Override
-	public ResponseEntity<?> getProfile( @AuthenticationPrincipal CustomUserDetails userDetails){
+	public ResponseEntity<?> getProfile( CustomUserDetails userDetails){
 		System.err.println(userDetails.getUsername());
 		System.err.println(userDetails.getUser().getFirstName());
 		User user = CommonUtil.getLoggedInUser();
@@ -39,7 +34,7 @@ public class UserController implements UserEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> changePassword(@RequestBody PasswordChangeReq changeReq){
+	public ResponseEntity<?> changePassword( PasswordChangeReq changeReq){
 		userService.changePassword(changeReq);
 		return CommonUtil.createBuildResponseMessage("password changed successfully", HttpStatus.OK);
 	}

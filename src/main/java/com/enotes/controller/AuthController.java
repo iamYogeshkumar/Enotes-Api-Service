@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enotes.dto.LoginRequest;
@@ -25,7 +24,7 @@ public class AuthController implements AuthEndpoint {
 	private AuthService authService;
 	
     @Override
-	public ResponseEntity<?> registerUser(@RequestBody UserRequest  userDto,HttpServletRequest servletRequest) throws Exception{
+	public ResponseEntity<?> registerUser( UserRequest  userDto,HttpServletRequest servletRequest) throws Exception{
 		log.info("AuthController : registerUser() : Start");
 		String url=CommonUtil.getUrl(servletRequest);
 		boolean register = authService.register(userDto,url);
@@ -41,7 +40,7 @@ public class AuthController implements AuthEndpoint {
 	}
 	
     @Override
-	public ResponseEntity<?> login(@RequestBody LoginRequest  loginRequest) throws Exception{
+	public ResponseEntity<?> login( LoginRequest  loginRequest) throws Exception{
 		
 		LoginResponse response = authService.login(loginRequest);
 		

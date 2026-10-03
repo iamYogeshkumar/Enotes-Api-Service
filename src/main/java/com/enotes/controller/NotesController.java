@@ -8,11 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +29,7 @@ public class NotesController implements NotesEndpoint {
 	private NotesService notesService;
 	
 	@Override
-	public ResponseEntity<?>  saveNotes(@RequestParam String notes ,@RequestParam(required = false) MultipartFile file)throws Exception{
+	public ResponseEntity<?>  saveNotes( String notes , MultipartFile file)throws Exception{
 		boolean saveNotes = notesService.saveNotes(notes,file);
 		if(saveNotes) {
 			return CommonUtil.createBuildResponseMessage("Notes Saved", HttpStatus.CREATED);
@@ -41,7 +38,7 @@ public class NotesController implements NotesEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> downloadFile(@PathVariable Integer id) throws Exception, IOException{
+	public ResponseEntity<?> downloadFile( Integer id) throws Exception, IOException{
 		FileDetails fileDetails=notesService.getFileDetails(id);
 		
 		byte [] downloadfile=notesService.downloadFile(fileDetails);
@@ -67,11 +64,7 @@ public class NotesController implements NotesEndpoint {
 	
 	
 	@Override
-	public ResponseEntity<?>  getAllNotesByUser(
-			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
-			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
-			 @AuthenticationPrincipal CustomUserDetails userDetails
-			){
+	public ResponseEntity<?>  getAllNotesByUser(int pageNo ,int pageSize, CustomUserDetails userDetails){
 		
 //		Sort sort=direction.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
 //		Integer userId=1;
@@ -88,10 +81,10 @@ public class NotesController implements NotesEndpoint {
 	
 	@Override
 	public ResponseEntity<?>  searchNotes(
-			@RequestParam(name="searchKeyword", defaultValue = "") String searchKeyword,
-			@RequestParam(name = "pageNo", defaultValue ="0") int pageNo ,
-			@RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
-			 @AuthenticationPrincipal CustomUserDetails userDetails
+			 String searchKeyword,
+			 int pageNo ,
+			 int pageSize,
+			 CustomUserDetails userDetails
 			){
 		
 //		Sort sort=direction.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
@@ -110,7 +103,7 @@ public class NotesController implements NotesEndpoint {
 	
 	
 	@Override
-	public ResponseEntity<?> deleteNotes(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<?> deleteNotes( Integer id) throws Exception{
 		boolean softDeleteNotes = notesService.softDeleteNotes(id);
 		
 		if(softDeleteNotes) {
@@ -123,7 +116,7 @@ public class NotesController implements NotesEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> restoreNotes(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<?> restoreNotes( Integer id) throws Exception{
 		boolean restoreNotes = notesService.restoreNotes(id);
 		
 		if(restoreNotes) {
@@ -135,7 +128,7 @@ public class NotesController implements NotesEndpoint {
 	
 	
 	@Override
-	public ResponseEntity<?> getUserRecycleBinNotes( @AuthenticationPrincipal CustomUserDetails userDetails) throws Exception{
+	public ResponseEntity<?> getUserRecycleBinNotes(  CustomUserDetails userDetails) throws Exception{
 		Integer userId = userDetails.getUser().getId();
 //		int userId=1;
 		List<NotesDto> notes = notesService.getUserRecycleBinNote(userId);
@@ -149,7 +142,7 @@ public class NotesController implements NotesEndpoint {
 	
 	
 	@Override
-	public ResponseEntity<?> hardDeleteNotes(@PathVariable Integer id) throws Exception{
+	public ResponseEntity<?> hardDeleteNotes( Integer id) throws Exception{
 		boolean softDeleteNotes = notesService.hardDeleteNotes(id);
 		
 		if(softDeleteNotes) {
@@ -162,7 +155,7 @@ public class NotesController implements NotesEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> emptyRecycleBin(@AuthenticationPrincipal CustomUserDetails details) throws Exception{
+	public ResponseEntity<?> emptyRecycleBin( CustomUserDetails details) throws Exception{
 //		int userId=1;
 		Integer userId = details.getUser().getId();
 		boolean softDeleteNotes = notesService.emptyRecycleBin(userId);
@@ -177,7 +170,7 @@ public class NotesController implements NotesEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> favouriteNote(@PathVariable int notesId,@AuthenticationPrincipal CustomUserDetails customUserDetails) throws Exception{
+	public ResponseEntity<?> favouriteNote( int notesId, CustomUserDetails customUserDetails) throws Exception{
 //		int userId=1;
 		Integer userId = customUserDetails.getUser().getId();
 		 notesService.favouriteNotes(userId);
@@ -185,7 +178,7 @@ public class NotesController implements NotesEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> unfavouriteNote(@PathVariable int notesId) throws Exception{
+	public ResponseEntity<?> unfavouriteNote( int notesId) throws Exception{
 //		int userId=1;
          notesService.unfavouriteNotes(notesId);
 		
@@ -206,7 +199,7 @@ public class NotesController implements NotesEndpoint {
 	}
 	
 	@Override
-	public ResponseEntity<?> copyNotes(@PathVariable int notesId) throws Exception{
+	public ResponseEntity<?> copyNotes( int notesId) throws Exception{
 		int userId=1;
 		 Boolean copyNotes = notesService.copyNotes(notesId);
 		 if(copyNotes) {
