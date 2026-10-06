@@ -1,0 +1,11 @@
+2026-04-45 21:45 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-45 21:45 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-45 21:45 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2026-04-45 21:45 ERROR [http-nio-8080-exec-3] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException : No static resource  for request '/swagger-ui'. 
+2026-04-45 21:45 WARN  [http-nio-8080-exec-3] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource  for request '/swagger-ui'.]
+2026-04-45 21:45 ERROR [http-nio-8080-exec-2] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException : No static resource favicon.ico for request '/favicon.ico'. 
+2026-04-45 21:45 WARN  [http-nio-8080-exec-2] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico for request '/favicon.ico'.]
+2026-04-45 21:45 ERROR [http-nio-8080-exec-4] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException : No static resource  for request '/swagger-ui/'. 
+2026-04-45 21:45 WARN  [http-nio-8080-exec-4] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource  for request '/swagger-ui/'.]
+2026-04-45 21:45 ERROR [http-nio-8080-exec-5] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : handleException : No static resource favicon.ico for request '/favicon.ico'. 
+2026-04-45 21:45 WARN  [http-nio-8080-exec-5] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico for request '/favicon.ico'.]

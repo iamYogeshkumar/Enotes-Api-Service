@@ -1,0 +1,22 @@
+2026-05-17 18:17 INFO  [RMI TCP Connection(37)-127.0.0.1] o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2026-05-17 18:17 INFO  [RMI TCP Connection(37)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-05-17 18:17 INFO  [tomcat-shutdown] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2026-05-17 18:17 INFO  [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-05-17 18:17 INFO  [RMI TCP Connection(37)-127.0.0.1] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-05-17 18:17 INFO  [RMI TCP Connection(37)-127.0.0.1] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-05-17 18:17 INFO  [RMI TCP Connection(37)-127.0.0.1] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2026-05-17 18:17 INFO  [RMI TCP Connection(37)-127.0.0.1] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2026-05-17 18:17 INFO  [restartedMain] c.enotes.EnotesApiServiceApplication - Starting EnotesApiServiceApplication using Java 17.0.11 with PID 8092 (C:\Users\YOGESH KUMAR SINGH\Enotes\Enotes-Api-Service\target\classes started by YOGESH KUMAR SINGH in C:\Users\YOGESH KUMAR SINGH\Enotes\Enotes-Api-Service)
+2026-05-17 18:17 INFO  [restartedMain] c.enotes.EnotesApiServiceApplication - The following 1 profile is active: "dev"
+2026-05-17 18:17 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-17 18:17 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-17 18:17 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-05-17 18:17 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-17 18:17 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 109 ms. Found 7 JPA repository interfaces.
+2026-05-17 18:17 INFO  [restartedMain] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-05-17 18:17 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-05-17 18:17 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-05-17 18:17 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-05-17 18:17 INFO  [restartedMain] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3484 ms
+2026-05-17 18:17 INFO  [restartedMain] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-05-17 18:17 INFO  [restartedMain] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.19.Final

@@ -156,3 +156,17 @@ spring:
 file:
   upload:
     path: notes/
+
+#swagger
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+    try-it-out-enabled: true
+
+ # packages-to-scan: com.example.controller
