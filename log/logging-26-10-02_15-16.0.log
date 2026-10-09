@@ -1,4 +1,0 @@
-2026-02-16 15:16:59.034 INFO  [restartedMain] c.enotes.EnotesApiServiceApplication - Starting EnotesApiServiceApplication using Java 17.0.11 with PID 18156 (C:\Users\YOGESH KUMAR SINGH\Enotes\Enotes-Api-Service\target\classes started by YOGESH KUMAR SINGH in C:\Users\YOGESH KUMAR SINGH\Enotes\Enotes-Api-Service)
-2026-02-16 15:16:59.039 INFO  [restartedMain] c.enotes.EnotesApiServiceApplication - The following 1 profile is active: "dev"
-2026-02-16 15:16:59.136 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2026-02-16 15:16:59.137 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'

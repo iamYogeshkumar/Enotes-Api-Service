@@ -1,5 +1,0 @@
-2026-02-21 17:21:22.859 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-02-21 17:21:22.868 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-02-21 17:21:22.871 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-02-21 17:21:24.595 ERROR [http-nio-8080-exec-1] c.e.exception.GlobalExceptionHandler - GlobalExceptionHandler : FileNotFoundException : Bad credentials 
-2026-02-21 17:21:24.720 WARN  [http-nio-8080-exec-1] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]

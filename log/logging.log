@@ -1,8 +1,14 @@
-2026-05-46 18:46 INFO  [RMI TCP Connection(40)-127.0.0.1] o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
-2026-05-46 18:46 INFO  [RMI TCP Connection(40)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2026-05-46 18:46 INFO  [tomcat-shutdown] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
-2026-05-46 18:46 INFO  [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
-2026-05-46 18:46 INFO  [RMI TCP Connection(40)-127.0.0.1] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
-2026-05-46 18:46 INFO  [RMI TCP Connection(40)-127.0.0.1] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-05-46 18:46 INFO  [RMI TCP Connection(40)-127.0.0.1] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2026-05-46 18:46 INFO  [RMI TCP Connection(40)-127.0.0.1] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-09-47 18:47 INFO  [http-nio-8080-exec-2] com.enotes.aspect.LoggingAspect - Calling :: JwtServiceImpl :: extractUsername()
+2026-09-47 18:47 INFO  [http-nio-8080-exec-2] com.enotes.aspect.LoggingAspect - Exceution End :: JwtServiceImpl :: extractUsername() ::257 ms
+2026-09-47 18:47 INFO  [http-nio-8080-exec-2] com.enotes.aspect.LoggingAspect - Calling :: JwtServiceImpl :: validateToken()
+2026-09-47 18:47 INFO  [http-nio-8080-exec-2] com.enotes.aspect.LoggingAspect - Exceution End :: JwtServiceImpl :: validateToken() ::9 ms
+2026-09-47 18:47 INFO  [http-nio-8080-exec-2] com.enotes.aspect.LoggingAspect - Calling :: UserController :: getProfile()
+2026-09-47 18:47 INFO  [http-nio-8080-exec-2] com.enotes.aspect.LoggingAspect - Exceution End :: UserController :: getProfile() ::3 ms
+2026-09-47 18:47 INFO  [RMI TCP Connection(11)-127.0.0.1] o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2026-09-47 18:47 INFO  [RMI TCP Connection(11)-127.0.0.1] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-47 18:47 INFO  [tomcat-shutdown] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2026-09-47 18:47 INFO  [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-09-47 18:47 INFO  [RMI TCP Connection(11)-127.0.0.1] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-09-47 18:47 INFO  [RMI TCP Connection(11)-127.0.0.1] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-47 18:47 INFO  [RMI TCP Connection(11)-127.0.0.1] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-09-47 18:47 INFO  [RMI TCP Connection(11)-127.0.0.1] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
