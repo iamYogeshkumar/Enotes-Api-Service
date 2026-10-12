@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -77,6 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	@Cacheable("allCategory")
 	public List<CategoryDto> getAllCategory() {
 		List<Category> Categories = categoryRepo.findByIsDeletedFalse();
 		List<CategoryDto> list = Categories.stream().map(c->mapper.map(c, CategoryDto.class)).toList();
@@ -85,6 +88,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	@Cacheable("activeCategory")
 	public List<CategoryResponse> getActiveCategory() {
 		List<Category> Categories = categoryRepo.findByIsActiveTrueAndIsDeletedFalse();
 		List<CategoryResponse> list = Categories.stream().map(active->mapper.map(active, CategoryResponse.class)).toList();
