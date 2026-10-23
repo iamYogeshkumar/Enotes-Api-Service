@@ -29,7 +29,7 @@ public class CategoryController implements CategoryEndpoint {
 	public ResponseEntity<?> saveCategory( CategoryDto categoryDto) {
 		boolean saveCategory = categoryService.saveCategory(categoryDto);
 		if (saveCategory) {
-			return CommonUtil.createBuildResponseMessage("Saved scucess", HttpStatus.OK);
+			return CommonUtil.createBuildResponseMessage("Saved scucess", HttpStatus.CREATED);
 //			return new ResponseEntity<>("saved", HttpStatus.OK);
 		} else {
 		   return	CommonUtil.createErrorResponseMessage("not saved", HttpStatus.INTERNAL_SERVER_ERROR);
